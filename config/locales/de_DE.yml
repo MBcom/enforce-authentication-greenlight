@@ -118,7 +118,7 @@ de_DE:
       banned: Nutzer wurde erfolgreich gesperrt.
       unbanned: Nutzer wurde erfolgreich entsperrt.
       delete: Nutzer erfolgreich gelöscht
-      delete_fail: Löschen des Nutzer fehlgeschlagen
+      delete_fail: Löschen des Nutzers fehlgeschlagen
       demoted: "Nutzer wurde erfolgreich zurückgestuft "
       invite: "Einladung erfolgreich an %{email} geschickt"
       invite_email_verification: "E-Mail-Versand muss aktiviert sein, um diese Methode verwenden zu können. Bitte kontaktieren Sie Ihren Systemadministrator."
@@ -508,7 +508,7 @@ de_DE:
       merge_success: Ihr Twitter-Konto wurde erfolgreich mit dem neuen Konto zusammengeführt. Der Zugang über Ihr Twitter-Konto wurde gelöscht.
     invite:
       fail: "Ihr Token ist entweder ungültig oder er ist abgelaufen. Falls Sie denken, dass hier ein Fehler vorliegt, kontaktieren Sie bitte Ihren Administrator."
-      no_invite: "Sie sind nicht zu Teilnahme eingeladen. Bitte kontaktieren Sie Ihren Administrator, um eine Einladung zu erhalten."
+      no_invite: "Sie sind nicht zur Teilnahme eingeladen. Bitte kontaktieren Sie Ihren Administrator, um eine Einladung zu erhalten."
   remove: Entfernen
   rename: Umbenennen
   reset_password:
@@ -537,7 +537,7 @@ de_DE:
       fail: "Raum konnte nicht gelöscht werden (%{error})"
     enter_the_access_code: Raumzugangscode bitte eingeben
     invalid_provider: "Sie haben eine ungültige URL eingegeben, bitte überprüfen Sie die URL und versuchen Sie es erneut."
-    invitation_description: "Sie wurden zu%{name} über BigBlueButton zur Teilnahme eingeladen. Um beizutreten, klicken Sie auf den obigen Link und geben Sie Ihren Namen ein."  
+    invitation_description: "Sie wurden zu %{name} über BigBlueButton zur Teilnahme eingeladen. Um beizutreten, klicken Sie auf den obigen Link und geben Sie Ihren Namen ein."  
     invited: Sie wurden zur Teilnahme eingeladen
     recording_present: "Ich bestätige, dass diese Sitzung aufgezeichnet wird. Dies kann meine Sprach- und Videoaufnahmen beinhalten, wenn dies aktiviert ist."
     invite_participants: Teilnehmer einladen
