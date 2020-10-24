@@ -113,7 +113,7 @@ Metrics/BlockLength:
 
 # A complexity metric geared towards measuring complexity for a human reader.
 Metrics/PerceivedComplexity:
-  Max: 17
+  Enabled: false
 
 # Avoid classes longer than 100 lines of code.
 Metrics/ClassLength:
