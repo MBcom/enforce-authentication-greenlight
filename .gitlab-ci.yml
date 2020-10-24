@@ -21,8 +21,6 @@ variables:
   K8S_SECRET_ALLOW_MAIL_NOTIFICATIONS: "true"
 
 
-  CANARY_ENABLED: "false"
-  REVIEW_DISABLED: "false"
 
   production_ADDITIONAL_HOSTS: $production_fqdn
   review_ADDITIONAL_HOSTS: $review_fqdn
