@@ -63,7 +63,7 @@
     <% end %>
     <% if bbb_downloader_ready?(recording[:recordID]) %>
       <li>
-        <a class="btn btn-sm btn-primary mt-1 w-100" target="_blank" href="/download/presentation/<%= recording[:recordID] %>/<%= recording[:recordID] %>.mp4">Download</a>
+        <a class="btn btn-sm btn-primary mt-1 w-100" target="_blank" href="/download/presentation/<%= recording[:recordID] %>/<%= recording[:recordID] %>.mp4?otp=<%= get_otp %>">Download</a>
       </li>
       <% end %>
     </ul>

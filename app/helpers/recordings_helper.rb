@@ -52,6 +52,11 @@ module RecordingsHelper
     File.file?("/var/bigbluebutton/published/presentation/#{meeting_id}/#{meeting_id}.mp4")
   end
 
+  def get_otp
+    totp = ROTP::TOTP.new(ENV["OTP_CODE"], issuer: "InfConf")
+    totp.now
+  end
+
   private
 
   # Returns length of the recording as a string
