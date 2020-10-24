@@ -1,4 +1,6 @@
 # Greenlight
+# Logs liegen unter /usr/src/app/log/
+
 
 ![Travis CI](https://travis-ci.org/bigbluebutton/greenlight.svg?branch=master)
 ![Coverage
