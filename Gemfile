@@ -139,4 +139,4 @@ gem "recaptcha"
 
 gem 'i18n-language-mapping', '~> 0.1.1'
 
-gem 'rotp'
+gem 'rotp', '~> 6.2'
