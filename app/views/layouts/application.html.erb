@@ -28,8 +28,9 @@
       </script>
     <% end %>
 
-    <title><%= yield(:page_title).present? ? yield(:page_title) : t("bigbluebutton") %></title>
-    <meta property="og:title" content="<%= yield(:page_title).present? ? yield(:page_title) : t("bigbluebutton") %>" />
+    <title>InfConf - 
+     <%= yield(:page_title).present? ? yield(:page_title) : t("MLU") %></title>
+    <meta property="og:title" content="InfConf - <%= yield(:page_title).present? ? yield(:page_title) : t("MLU") %>" />
     <meta property="og:type" content="website" />
     <meta property="og:description" content="<%= yield(:page_desc).present? ? yield(:page_desc) : t("landing.about", href: "Greenlight", locale: :en) %>" />
     <meta property="og:url" content="<%= request.base_url %>" />
@@ -53,7 +54,7 @@
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
 
-    <%= favicon_link_tag asset_path('favicon.ico') %>
+    <%= favicon_link_tag 'https://mluconf.uni-halle.de/b/apple-touch-icon-precomposed.png' %>
 
     <!-- Primary color styling -->
     <%= stylesheet_link_tag themes_primary_path %>
