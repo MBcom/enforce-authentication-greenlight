@@ -19,6 +19,7 @@
       <%= link_to (current_user ? home_page : root_path), class: "header-brand" do %>
         <% begin %>
           <%= image_tag(logo_image, class: "header-brand-img", alt:"") %>
+          InfConf
         <% rescue %>
           <%= t("administrator.site_settings.branding.invalid") %>
         <% end %>
@@ -95,7 +96,9 @@
           <% elsif Rails.configuration.loadbalanced_configuration %>
             <%= link_to t("login"), omniauth_login_url(:bn_launcher), :class => "btn btn-outline-primary mx-2 sign-in-button" %>
           <% else %>
+            <!--
             <%= link_to t("login"), signin_path, :class => "btn btn-outline-primary mx-2 sign-in-button" %>
+            -->
           <% end %>
 
           <% if allow_user_signup? && allow_greenlight_accounts %>

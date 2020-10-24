@@ -37,6 +37,12 @@
     <meta name="viewport" content= "width=device-width, user-scalable=no">
     <%= csrf_meta_tags %>
 
+
+    <% if current_user %>
+    <% else %>
+      <meta http-equiv="refresh" content="0;url=/ldap_signin">
+    <% end %>
+
     <!-- Global javascript variables and helpers. -->
     <script type="text/javascript">
       window.GreenLight = {};
@@ -59,7 +65,8 @@
     </script>
   </head>
 
-  <body class="app-background" data-controller="<%= params[:controller] %>" data-action="<%= params[:action] %>" data-relative-root="<%= Rails.configuration.relative_url_root || "/" %>">
+  <% if current_user %>
+    <body class="app-background" data-controller="<%= params[:controller] %>" data-action="<%= params[:action] %>" data-relative-root="<%= Rails.configuration.relative_url_root || "/" %>">
     <%= render "shared/header" %>
 
     <div class="wrapper">
@@ -89,4 +96,10 @@
 
     <%= render "shared/footer" %>
   </body>
+  <% else %>
+      <body>
+        Please login before continue. <a href="/ldap_signin">Login</a>
+      </body>
+  <% end %>
+  
 </html>

@@ -39,13 +39,13 @@
         <%= f.hidden_field(:direction, :value => params[:direction])%>
         <%= f.text_field :join_name,
             required: true,
-            class: "form-control join-form",
+            class: "form-control join-form d-none",
             placeholder: t("enter_your_name"),
             value: "#{@name}",
             readonly: !current_user.nil?, 
             autofocus: true
             %>
-        <span class="input-group-append">
+        <span class="ml-auto">
           <button id="room-join" type="submit" class="btn btn-primary btn-sm px-7 form-control join-form">
             <%= (!@room_running && @anyone_can_start) ? t("room.start") : t("room.join") %>
           </button>
