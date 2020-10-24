@@ -28,9 +28,8 @@
       </script>
     <% end %>
 
-    <title>InfConf - 
-     <%= yield(:page_title).present? ? yield(:page_title) : t("MLU") %></title>
-    <meta property="og:title" content="InfConf - <%= yield(:page_title).present? ? yield(:page_title) : t("MLU") %>" />
+    <title><%= yield(:page_title).present? ? "InfConf - " + yield(:page_title) : "InfConf" %></title>
+    <meta property="og:title" content="<%= yield(:page_title).present? ? "InfConf - " + yield(:page_title) : "InfConf" %>" />
     <meta property="og:type" content="website" />
     <meta property="og:description" content="<%= yield(:page_desc).present? ? yield(:page_desc) : t("landing.about", href: "Greenlight", locale: :en) %>" />
     <meta property="og:url" content="<%= request.base_url %>" />
