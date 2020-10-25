@@ -4,3 +4,7 @@ ingress:
   tls:
     enabled: true
     secretName: "kube-cert"
+service:
+  externalPort: 80
+  internalPort: 80
+
