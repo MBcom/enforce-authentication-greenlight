@@ -7,4 +7,9 @@ ingress:
 service:
   externalPort: 80
   internalPort: 80
+livenessProbe:
+  initialDelaySeconds: 50
+readinessProbe:
+  initialDelaySeconds: 40
+
 
