@@ -38,11 +38,6 @@
     <%= csrf_meta_tags %>
 
 
-    <% if current_user or request.fullpath == '/ldap_signin' %>
-    <% else %>
-      <meta http-equiv="refresh" content="0;url=/ldap_signin">
-    <% end %>
-
     <!-- Global javascript variables and helpers. -->
     <script type="text/javascript">
       window.GreenLight = {};
@@ -97,9 +92,60 @@
     <%= render "shared/footer" %>
   </body>
   <% else %>
-      <body>
-        Please login before continue. <a href="/ldap_signin">Login</a>
-      </body>
+    <% cookies[:return_to] = request.url %>
+     <body class="app-background" data-controller="sessions" data-action="ldap_signin" data-relative-root="<%= Rails.configuration.relative_url_root || "/" %>">
+    <%= render "shared/header" %>
+
+    <div class="wrapper">
+      
+
+      <% unless Rails.configuration.banner_message.blank? %>
+        <div class="alert alert-icon alert-danger text-center mb-0">
+          <div class="flash alert d-inline">
+            <p class="d-inline"><%= Rails.configuration.banner_message %></p>
+          </div>
+        </div>
+      <% end %>
+
+        <div class="container">
+            <div class="row pt-7">
+                <div class="col col-lg-6 offset-lg-3">
+                    <div class="card">
+                        <div class="card-header background">
+                            <h4 class="mt-2"><%= t("login_title") %></h4>
+                        </div>
+                        <div class="card-body background">
+                            <%= form_for(:session, url: ldap_callback_path) do |f| %>
+                                <div class="form-group">
+                                    <div class="input-icon">
+                                        <span class="input-icon-addon">
+                                            <i class="fas fa-user"></i>
+                                        </span>
+                                        <%= f.text_field :username, class: "form-control", placeholder: t("administrator.users.table.username"), value: "", autocomplete: "username", autocapitalize: "none", spellcheck: "false", autofocus: "" %>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-icon">
+                                        <span class="input-icon-addon">
+                                            <i class="fas fa-key"></i>
+                                        </span>
+                                        <%= f.password_field :password, class: "form-control", placeholder: t("password"), value: "" %>
+                                    </div>
+                                </div>
+                                <div>
+                                    <%= f.submit t("login"), class: "btn btn-primary btn-block signin-button" %>
+                                </div>
+                            <% end %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> 
+
+    </div>
+
+    <%= render "shared/footer" %>
+    </body>
   <% end %>
   
 </html>
