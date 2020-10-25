@@ -11,7 +11,7 @@ variables:
   POSTGRES_USER: greenlight
   POSTGRES_ENABLED: "true"
   POSTGRES_DB: $CI_ENVIRONMENT_SLUG
-  K8S_SECRET_DB_HOST: ${CI_ENVIRONMENT_SLUG}-postgres
+  K8S_SECRET_DB_HOST: ${CI_ENVIRONMENT_SLUG}-postgresql
   K8S_SECRET_DB_NAME: $POSTGRES_DB
   K8S_SECRET_DB_USERNAME: $POSTGRES_USER
   K8S_SECRET_DB_PASSWORD: $POSTGRES_PASSWORD
@@ -34,6 +34,7 @@ variables:
 
 stages:
   - test
+  - build-app
   - build
   - deploy  # dummy stage to follow the template guidelines
   - review
@@ -47,6 +48,48 @@ stages:
   - incremental rollout 100%
   - performance
   - cleanup
+
+build-app:
+  image: ruby:2.5.8-alpine3.12
+  stage: build-app
+  variables:
+    #RAILS_ROOT: /usr/src/app
+    RAILS_ENV: production
+    BUNDLE_APP_CONFIG: /usr/src/app/.bundle
+    BUILD_PACKAGES: "build-base curl-dev git"
+    DEV_PACKAGES: "postgresql-dev sqlite-libs sqlite-dev yaml-dev zlib-dev nodejs yarn"
+    RUBY_PACKAGES: "tzdata"
+  script:
+    - apk update && apk upgrade && apk add --update --no-cache $BUILD_PACKAGES $DEV_PACKAGES $RUBY_PACKAGES
+    - bundle config --global frozen 1 && bundle install --deployment --without development:test:assets --path=vendor/bundle && rm -rf vendor/bundle/ruby/2.5.0/cache/*.gem && find vendor/bundle/ruby/2.5.0/gems/ -name "*.c" -delete && find vendor/bundle/ruby/2.5.0/gems/ -name "*.o" -delete
+    - rm -rf tmp/cache spec
+  artifacts:
+    untracked: true
+    expire_in: 1h
+  needs: []
+
+build:
+  stage: build
+  image: "registry.gitlab.com/gitlab-org/cluster-integration/auto-build-image:v0.4.0"
+  variables:
+    DOCKER_TLS_CERTDIR: ""
+  services:
+    - docker:19.03.12-dind
+  script:
+    - |
+      if [[ -z "$CI_COMMIT_TAG" ]]; then
+        export CI_APPLICATION_REPOSITORY=${CI_APPLICATION_REPOSITORY:-$CI_REGISTRY_IMAGE/$CI_COMMIT_REF_SLUG}
+        export CI_APPLICATION_TAG=${CI_APPLICATION_TAG:-$CI_COMMIT_SHA}
+      else
+        export CI_APPLICATION_REPOSITORY=${CI_APPLICATION_REPOSITORY:-$CI_REGISTRY_IMAGE}
+        export CI_APPLICATION_TAG=${CI_APPLICATION_TAG:-$CI_COMMIT_TAG}
+      fi
+    - /build/build.sh
+  rules:
+    - if: '$CI_COMMIT_TAG || $CI_COMMIT_BRANCH'
+  needs:
+    - "build-app"
+
 
 include:
  # - template: Jobs/Build.gitlab-ci.yml  # https://gitlab.com/gitlab-org/gitlab/blob/master/lib/gitlab/ci/templates/Jobs/Build.gitlab-ci.yml
