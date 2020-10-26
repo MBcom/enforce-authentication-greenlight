@@ -47,6 +47,15 @@ class SessionsController < ApplicationController
   def ldap_signin
   end
 
+  # GET /is_looged_in
+  def is_looged_in
+    if current_user
+      head :ok
+    else
+      head :unauthorized
+    end
+  end
+
   # GET /signup
   def new
     # Check if the user needs to be invited
