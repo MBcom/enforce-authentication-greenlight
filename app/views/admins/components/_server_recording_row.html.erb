@@ -59,11 +59,11 @@
     <ul class="list-unstyled">
     <% sorted_formats = recording[:playbacks].sort_by! { |p| p[:type] } %>
     <% sorted_formats.each do |p| %>
-      <li><%= link_to t("recording.format.#{p[:type]}"), p[:url], class: "btn btn-sm btn-primary w-100", target: "_blank" %></li>
+      <li><%= link_to t("recording.format.#{p[:type]}"), p[:url].gsub(/https:\/\/.*?\//, ''), class: "btn btn-sm btn-primary w-100", target: "_blank" %></li>
     <% end %>
     <% if bbb_downloader_ready?(recording[:recordID]) %>
       <li>
-        <a class="btn btn-sm btn-primary mt-1 w-100" target="_blank" href="/download/presentation/<%= recording[:recordID] %>/<%= recording[:recordID] %>.mp4?otp=<%= get_otp %>">Download</a>
+        <a class="btn btn-sm btn-primary mt-1 w-100" target="_blank" href="/download/presentation/<%= recording[:recordID] %>/<%= recording[:recordID] %>.mp4">Download</a>
       </li>
       <% end %>
     </ul>
