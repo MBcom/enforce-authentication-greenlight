@@ -23,7 +23,6 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
-    rotp (6.2.0)
     action-cable-testing (0.6.1)
       actioncable (>= 5.0)
     actioncable (5.2.4.3)
@@ -412,7 +411,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  rotp (~> 6.2)
   action-cable-testing
   aws-sdk-s3 (~> 1.75)
   bcrypt (~> 3.1.7)
