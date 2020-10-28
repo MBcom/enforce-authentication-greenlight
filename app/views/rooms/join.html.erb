@@ -37,19 +37,35 @@
         <%= f.hidden_field(:search, :value => params[:search])%>
         <%= f.hidden_field(:column, :value => params[:column])%>
         <%= f.hidden_field(:direction, :value => params[:direction])%>
-        <%= f.text_field :join_name,
+        <% if current_user.name.first == "Inf BBB Guest" %>
+          <%= f.text_field :join_name,
             required: true,
-            class: "form-control join-form d-none",
+            class: "form-control join-form",
             placeholder: t("enter_your_name"),
             value: "#{@name}",
             readonly: !current_user.nil?, 
             autofocus: true
             %>
-        <span class="ml-auto">
-          <button id="room-join" type="submit" class="btn btn-primary btn-sm px-7 form-control join-form">
-            <%= (!@room_running && @anyone_can_start) ? t("room.start") : t("room.join") %>
-          </button>
-        </span>
+          <span class="input-group-append">
+            <button type="submit" class="btn btn-primary btn-sm px-7 form-control join-form">
+              <%= (!@room_running && @anyone_can_start) ? t("room.start") : t("room.join") %>
+            </button>
+          </span>
+        <% else %>
+          <%= f.text_field :join_name,
+              required: true,
+              class: "form-control join-form d-none",
+              placeholder: t("enter_your_name"),
+              value: "#{@name}",
+              readonly: !current_user.nil?, 
+              autofocus: true
+              %>
+          <span class="ml-auto">
+            <button id="room-join" type="submit" class="btn btn-primary btn-sm px-7 form-control join-form">
+              <%= (!@room_running && @anyone_can_start) ? t("room.start") : t("room.join") %>
+            </button>
+          </span>
+        <% end %>
       </div>
       <% if display_joiner_consent %>
         <label class="custom-control custom-checkbox">
