@@ -34,7 +34,7 @@
       <% p = recording[:playbacks].find do |p| p.key?(:preview) end %>
       <% if p %>
         <% safe_recording_images(p[:preview][:images][:image]).each do |img| %>
-          <%= image_tag(img[:content].strip.gsub(/https:\/\/.*?\//, ''), class: "thumbnail px-2") %>
+          <img src="<%= img[:content].strip.gsub(/https:\/\/.*?\//, '/') %>" class="thumbnail px-2" alt="Thumbnail" />
         <% end %>
       <% end %>
     </td>
