@@ -93,7 +93,7 @@
   </body>
   <% else %>
     <% if params.has_key?(:rd) && params[:rd].match(/https:\/\/.*?\//) %>
-      <% cookies[:return_to] = params[:rd].gsub(/https:\/\/.*?\//, '') %>
+      <% cookies[:return_to] = params[:rd].gsub(/https:\/\/.*?\//, '/') %>
     <% else %>
       <% cookies[:return_to] = request.url %>
     <% end %>
