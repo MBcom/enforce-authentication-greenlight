@@ -75,7 +75,7 @@
                 required: true,
                 class: "form-control join-form",
                 placeholder: t("enter_your_name"),
-                value: current_user.name,
+                value: "#{current_user.name}",
                 autofocus: true
                 %>
               <span class="input-group-append">
@@ -84,7 +84,10 @@
                 </button>
               </span>
             <% else %>
-             Bitte kontaktieren Sie Ihren Administrator. 0xc50004154545<% #Hier sollte man eigentlich garnicht hinkommen, da man angemeldet sein muss wenn man seinen eigenen Raum betrachtet %>
+                <% 
+                # Hier sollte man eigentlich garnicht hinkommen, da man angemeldet sein muss wenn man seinen eigenen Raum betrachtet 
+                %>
+                Bitte kontaktieren Sie Ihren Administrator. 0xc50004154545
             <% end %>
           </div>
         <% end %>
