@@ -71,3 +71,4 @@ test:
     paths:
       - vendor/bundle
   needs: []
+  allow_failure: true

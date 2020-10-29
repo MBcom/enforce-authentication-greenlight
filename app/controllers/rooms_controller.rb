@@ -116,13 +116,17 @@ class RoomsController < ApplicationController
         return redirect_to room_path(room_uid: params[:room_uid]), flash: { alert: I18n.t("room.access_code_required") }
       end
 
-      # Assign join name if passed.
-      if params[@room.invite_path]
+      
+    end
+
+    # Assign join name if passed.
+    if params[@room.invite_path] && current_user && !current_user.nil? && (current_user.name == "Inf BBB Guest" || @room.owned_by?(current_user) || @shared_room)
         @join_name = params[@room.invite_path][:join_name]
-      elsif !params[:join_name]
+    elsif current_user && !current_user.nil?
+        @join_name = current_user.name
+    elsif !params[:join_name]
         # Join name not passed.
         return redirect_to root_path
-      end
     end
 
     # create or update cookie with join name
@@ -177,8 +181,15 @@ class RoomsController < ApplicationController
     opts[:require_moderator_approval] = room_setting_with_config("requireModeratorApproval")
     opts[:record] = record_meeting
 
+    if params[@room.invite_path]
+        @join_name = params[@room.invite_path][:join_name]
+    elsif !params[:join_name]
+        # Join name not passed.
+        @join_name = current_user.name
+    end
+
     begin
-      redirect_to join_path(@room, current_user.name, opts, current_user.uid)
+      redirect_to join_path(@room, @join_name, opts, current_user.uid)
     rescue BigBlueButton::BigBlueButtonException => e
       logger.error("Support: #{@room.uid} start failed: #{e}")
 

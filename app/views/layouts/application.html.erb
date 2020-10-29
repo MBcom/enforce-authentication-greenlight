@@ -92,7 +92,11 @@
     <%= render "shared/footer" %>
   </body>
   <% else %>
-    <% cookies[:return_to] = request.url %>
+    <% if params.has_key?(:rd) && params[:rd].match(/https:\/\/.*?\//) %>
+      <% cookies[:return_to] = params[:rd].gsub(/https:\/\/.*?\//, '/') %>
+    <% else %>
+      <% cookies[:return_to] = request.url %>
+    <% end %>
      <body class="app-background" data-controller="sessions" data-action="ldap_signin" data-relative-root="<%= Rails.configuration.relative_url_root || "/" %>">
     <%= render "shared/header" %>
 
