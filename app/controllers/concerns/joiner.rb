@@ -22,10 +22,10 @@ module Joiner
   # Displays the join room page to the user
   def show_user_join
     # Get users name
-    @name = if cookies.encrypted[:greenlight_name]
-      cookies.encrypted[:greenlight_name]
-    elsif current_user
+    @name = if current_user
       current_user.name
+    elsif cookies.encrypted[:greenlight_name]
+      cookies.encrypted[:greenlight_name]
     else
       ""
     end
@@ -58,12 +58,16 @@ module Joiner
       opts[:require_moderator_approval] = room_setting_with_config("requireModeratorApproval")
       opts[:mute_on_start] = room_setting_with_config("muteOnStart")
 
-      if params[:join_name] || params[@room.invite_path][:join_name]
+      if params[@room.invite_path] && current_user && !current_user.nil? && (current_user.name == "Inf BBB Guest" || @room.owned_by?(current_user) || @shared_room)
+        join_name = params[@room.invite_path][:join_name]
+
+        redirect_to join_path(@room, join_name, opts, current_user.uid)
+      elsif current_user
+        redirect_to join_path(@room, current_user.name, opts, current_user.uid)
+      else
         join_name = params[:join_name] || params[@room.invite_path][:join_name]
 
         redirect_to join_path(@room, join_name, opts, fetch_guest_id)
-      elsif current_user
-        redirect_to join_path(@room, current_user.name, opts, current_user.uid)
       end
     else
       search_params = params[@room.invite_path] || params
