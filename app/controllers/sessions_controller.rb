@@ -22,7 +22,7 @@ class SessionsController < ApplicationController
   include Emailer
   include LdapAuthenticator
 
-  skip_before_action :verify_authenticity_token, only: [:omniauth, :fail]
+  skip_before_action :verify_authenticity_token, only: [:omniauth, :fail, :ldap_callback]
   before_action :check_user_signup_allowed, only: [:new]
   before_action :ensure_unauthenticated_except_twitter, only: [:new, :signin, :ldap_signin]
 
