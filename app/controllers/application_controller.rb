@@ -25,6 +25,11 @@ class ApplicationController < ActionController::Base
 
   protect_from_forgery with: :exceptions
 
+  # https://stackoverflow.com/questions/36509300/gracefully-handling-invalidauthenticitytoken-exceptions-in-rails-4
+  def handle_unverified_request
+    redirect_to(:back, alert: I18n.t("retry"))
+  end
+
   # Retrieves the current user.
   def current_user
     @current_user ||= User.includes(:role, :main_room).find_by(id: session[:user_id])
