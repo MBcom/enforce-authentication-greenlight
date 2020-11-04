@@ -298,7 +298,7 @@ de_DE:
       signout: Abmelden
   home_room: Startraum
   info_update_success: Information erfolgreich aktualisiert.
-  invalid_credentials: "Der eingegebene 5-Steller oder das Passwort sind nicht richtig. Bitte versuchen Sie es erneut oder setzen Sie Ihr Passwort im ITZ Servicecenter der MLU."
+  invalid_credentials: "Der eingegebene 5-Steller oder das Passwort sind nicht richtig. Bitte versuchen Sie es erneut oder setzen Sie Ihr Passwort im ITZ Serviceportal der MLU."
   invalid_login_method: Die Anmeldung scheiterte aufgrund einer Unstimmigkeit mit dem Konto. Sie müssen sich mit Omniauth anmelden.
   invite_message: "Um jemanden zur Konferenz einzuladen, schicken Sie ihm diesen Link:"
   javascript:
