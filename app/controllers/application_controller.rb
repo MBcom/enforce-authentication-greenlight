@@ -27,7 +27,7 @@ class ApplicationController < ActionController::Base
 
   # https://stackoverflow.com/questions/36509300/gracefully-handling-invalidauthenticitytoken-exceptions-in-rails-4
   def handle_unverified_request
-    redirect_to(:back, alert: I18n.t("retry"))
+    redirect_back(fallback_location: root_path, alert: I18n.t("retry"))
   end
 
   # Retrieves the current user.
