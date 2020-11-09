@@ -208,7 +208,7 @@ en:
         no_users: No users found
         role: Role
         uid: User ID
-        username: Username
+        username: 5-digit MLU login
       title: Manage Users
   add_to_google_calendar: "Add to Google Calendar"
   bigbluebutton: BigBlueButton
