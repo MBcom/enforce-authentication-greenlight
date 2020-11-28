@@ -52,6 +52,11 @@ module RecordingsHelper
     File.file?("/var/bigbluebutton/published/presentation/#{meeting_id}/#{meeting_id}.mp4")
   end
 
+  # checks if notes available
+  def bbb_notes_available?(meeting_id)
+    File.file?("/var/bigbluebutton/published/presentation/#{meeting_id}/notes.pdf")
+  end
+
   private
 
   # Returns length of the recording as a string

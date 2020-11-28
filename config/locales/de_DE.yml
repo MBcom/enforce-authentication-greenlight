@@ -477,6 +477,8 @@ de_DE:
       recaptcha_unreachable: "Ups, es war nicht möglich die reCAPTCHA Antwort zu überprüfen. Bitte versuchen Sie es nochmals."
       verification_failed: "reCAPTCHA Verifikation fehlgeschlagen, bitte nochmals versuchen."
   recording:
+    notes: Notizen
+    download: Download
     all_recordings: Alle Aufzeichnungen
     email: Aufzeichnungslink per E-Mail
     error: "Beim Abruf von %{count} Aufzeichnung(en) ist ein Fehler aufgetreten."

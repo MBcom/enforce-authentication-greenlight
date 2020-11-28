@@ -476,6 +476,8 @@ en:
       recaptcha_unreachable: Oops, we failed to validate your reCAPTCHA response. Please try again.
       verification_failed: reCAPTCHA verification failed, please try again.
   recording:
+    notes: Notes
+    download: Download
     all_recordings: All Recordings
     email: Email Recording
     error: There was an error retrieving %{count} recording(s)
