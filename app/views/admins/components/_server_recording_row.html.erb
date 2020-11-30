@@ -68,7 +68,7 @@
       <% end %>
       <% if bbb_notes_available?(recording[:recordID]) %>
         <li>
-          <a class="btn btn-sm btn-primary ml-2" target="_blank" href="/download/presentation/<%= recording[:recordID] %>/notes.pdf"><%= t("recording.notes") %></a>
+          <a class="btn btn-sm btn-primary mt-1 w-100" target="_blank" href="/download/presentation/<%= recording[:recordID] %>/notes.pdf"><%= t("recording.notes") %></a>
         </li>
       <% end %>
     </ul>
