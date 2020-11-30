@@ -151,10 +151,10 @@ function copyInvite() {
     $('#invite-url').blur();
     copy = $("#copy-invite")
     copy.addClass('btn-success');
-    copy.html("<i class='fas fa-check mr-1'></i>" + getLocalizedString("copied"))
+    copy.html("<i class='fas fa-check'></i>" + getLocalizedString("copied"))
     setTimeout(function(){
       copy.removeClass('btn-success');
-      copy.html("<i class='fas fa-copy mr-1'></i>" + getLocalizedString("copy"))
+      copy.html("<i class='fas fa-copy'></i>")
     }, 1000)
   }
 }

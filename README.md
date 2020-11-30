@@ -1,5 +1,4 @@
-# Greenlight
-# Logs liegen unter /usr/src/app/log/
+# Greenlight with enforced authentication and preparation for MP4 recording view
 
 
 ![Travis CI](https://travis-ci.org/bigbluebutton/greenlight.svg?branch=master)
@@ -9,13 +8,31 @@
 
 Greenlight is a simple front-end interface for your BigBlueButton server. At it's heart, Greenlight provides a minimalistic web-based application that allows users to:
 
-  * Signup/Login with Google, Office365, or through the application itself.
-  * Manage your account settings and user preferences.
+  * Signup/Login with LDAP/AD Authentication.
   * Create and manage your own personal rooms ([BigBlueButton](https://github.com/bigbluebutton/bigbluebutton) sessions).
   * Invite others to your room using a simple URL.
   * View recordings and share them with others.
 
-Interested? Try Greenlight out on our [demo server](https://demo.bigbluebutton.org/gl)!
+**This greenlight has the same features as `release-2.7.9` of upstream Greenlight. Feel free to contribute.**
+
+## extra Features additional to upstream Greenlight
+  * enforce user authentication to view rooms or join meetings
+  * room owners are able to change their names before entering a meeting
+  * all others are enforced to user their domain names as in Greenlight
+  * button for MP4 video, e.g. created with https://github.com/MBcom/kubernetes-bbb-video-download
+  * button for getting shared notes, e.g. copied with https://github.com/MBcom/kubernetes-bbb-video-download/blob/master/snippets/post_publish_copy_notes.rb and copy_notes.sh
+
+## Deployment
+This project is designed to be deployed to Kubernetes Clusters via GitLab CI/CD. If you have not htis ability you can use the scripts provided at https://github.com/MBcom/kubernetes-greenlight to deploy Greenlight to a Kubernetes Cluster. 
+  
+Too you can deploy this Greenlight as the upstream Greenlight.
+The docker image you can find on https://hub.docker.com/r/mbcom/greenlight .
+
+## Impressions
+
+
+
+Interested? Try upstream Greenlight out on our [demo server](https://demo.bigbluebutton.org/gl)!
 
 Greenlight is also completely configurable. This means you can turn on/off features to make Greenlight fit your specific use case. For more information on Greenlight and its features, see our [documentation](http://docs.bigbluebutton.org/greenlight/gl-install.html).
 
@@ -37,3 +54,6 @@ We invite you to build upon Greenlight and help make it better. See [Contributin
 
 We invite your feedback, questions, and suggests about Greenlight too. Please post them to the [developer mailing list](https://groups.google.com/forum/#!forum/bigbluebutton-dev).
 
+
+**Contributions to this project are welcome.
+E.g. you can help us to make our changes configurable, so that we can start a pull request to upstream repository in future.**
