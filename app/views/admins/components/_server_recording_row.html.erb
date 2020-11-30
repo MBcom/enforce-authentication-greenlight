@@ -56,10 +56,22 @@
     </div>
   </td>
   <td>
+    <ul class="list-unstyled">
     <% sorted_formats = recording[:playbacks].sort_by! { |p| p[:type] } %>
     <% sorted_formats.each do |p| %>
-      <%= link_to t("recording.format.#{p[:type]}"), p[:url], class: "btn btn-sm btn-primary", target: "_blank" %>
+      <li><%= link_to t("recording.format.#{p[:type]}"), p[:url].gsub(/https:\/\/.*?\//, '/'), class: "btn btn-sm btn-primary w-100", target: "_blank" %></li>
     <% end %>
+    <% if bbb_downloader_ready?(recording[:recordID]) %>
+      <li>
+        <a class="btn btn-sm btn-primary mt-1 w-100" target="_blank" href="/download/presentation/<%= recording[:recordID] %>/<%= recording[:recordID] %>.mp4"><%= t("recording.download") %></a>
+      </li>
+      <% end %>
+      <% if bbb_notes_available?(recording[:recordID]) %>
+        <li>
+          <a class="btn btn-sm btn-primary mt-1 w-100" target="_blank" href="/download/presentation/<%= recording[:recordID] %>/notes.pdf"><%= t("recording.notes") %></a>
+        </li>
+      <% end %>
+    </ul>
   </td>
   <td class="text-center">
     <div class="item-action dropdown">

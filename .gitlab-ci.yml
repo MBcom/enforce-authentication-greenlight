@@ -1,71 +1,73 @@
-stages:
-  - test
-  - build
-  - deploy
+
 
 cache:
   paths:
     - /cache
 
-before_script:
+
+variables:
+  # KUBE_INGRESS_BASE_DOMAIN is the application deployment domain and should be set as a variable at the group or project level.
+
+  POSTGRES_USER: greenlight
+  POSTGRES_ENABLED: "true"
+  POSTGRES_DB: $CI_ENVIRONMENT_SLUG
+  K8S_SECRET_DB_HOST: ${CI_ENVIRONMENT_SLUG}-postgresql
+  K8S_SECRET_DB_NAME: $POSTGRES_DB
+  K8S_SECRET_DB_USERNAME: $POSTGRES_USER
+  K8S_SECRET_DB_PASSWORD: $POSTGRES_PASSWORD
+  K8S_SECRET_DEFAULT_REGISTRATION: approval
+  K8S_SECRET_ROOM_FEATURES: "mute-on-join,require-moderator-approval,anyone-can-start,all-join-moderator"
+  K8S_SECRET_RELATIVE_URL_ROOT: "/"
+  K8S_SECRET_ALLOW_MAIL_NOTIFICATIONS: "true"
+
+
+
+  production_ADDITIONAL_HOSTS: $production_fqdn
+  review_ADDITIONAL_HOSTS: $review_fqdn
+
+  AUTO_DEVOPS_BUILD_IMAGE_EXTRA_ARGS: "--network host"
+
+  DOCKER_DRIVER: overlay2
+
+  ROLLOUT_RESOURCE_TYPE: deployment
+
+  DOCKER_TLS_CERTDIR: ""  # https://gitlab.com/gitlab-org/gitlab-runner/issues/4501
+
+stages:
+  - build
+  - test
+  - deploy  # dummy stage to follow the template guidelines
+  - review
+  - dast
+  - staging
+  - canary
+  - production
+  - incremental rollout 10%
+  - incremental rollout 25%
+  - incremental rollout 50%
+  - incremental rollout 100%
+  - performance
+  - cleanup
+
+
+  
+
+include:
+  - template: Jobs/Build.gitlab-ci.yml  # https://gitlab.com/gitlab-org/gitlab/blob/master/lib/gitlab/ci/templates/Jobs/Build.gitlab-ci.yml
+  - template: Jobs/Deploy.gitlab-ci.yml  # https://gitlab.com/gitlab-org/gitlab/blob/master/lib/gitlab/ci/templates/Jobs/Deploy.gitlab-ci.yml
 
 test:
   stage: test
   image: ruby:2.5
   script:
   - apt-get update -qq && apt-get install -y -qq sqlite3 libsqlite3-dev nodejs
-  - bundle install --path /cache
+  - bundle install --path=vendor/bundle
   - bundle exec rake db:create RAILS_ENV=test
-  - bundle exec rake test & bundle exec rspec & bundle exec rubocop
+  - bundle exec rake test & bundle exec rspec # & bundle exec rubocop
   except:
     variables:
       - $CD_TEST_IGNORE
-
-build:
-  stage: build
-  image: docker:stable
-  services:
-  - docker:dind
-  script:
-  # Install bash, curl, git for deployment script
-  - apk update && apk add --no-cache bash curl git
-  # Install CA certs, openssl to https downloads, python for gcloud sdk
-  - apk add --update make ca-certificates openssl python
-  - update-ca-certificates
-  # Build.
-  - ./scripts/image_build.sh $CI_PROJECT_PATH $CI_COMMIT_REF_NAME $CI_COMMIT_SHA
-  only:
-    refs:
-      - branches
-      - tags
-    variables:
-      - $CD_DOCKER_USERNAME
-      - $CD_DOCKER_PASSWORD
-  except:
-    variables:
-      - $CD_BUILD_IGNORE
-
-deploy:
-  stage: deploy
-  image: docker:stable
-  services:
-  - docker:dind
-  script:
-  # Install bash, curl, git for deployment script
-  - apk update && apk add --no-cache bash curl git
-  # Install CA certs, openssl to https downloads, python for gcloud sdk
-  - apk add --update make ca-certificates openssl python
-  - update-ca-certificates
-  # Deploy.
-  - ./scripts/image_deploy.sh $CI_PROJECT_PATH $CI_COMMIT_REF_NAME $CI_COMMIT_SHA $CI_COMMIT_BEFORE_SHA
-  only:
-    refs:
-      - branches
-      - tags
-    variables:
-      - $CD_DOCKER_USERNAME
-      - $CD_DOCKER_PASSWORD
-      - $CD_DEPLOY_SCRIPT
-  except:
-    variables:
-      - $CD_DEPLOY_IGNORE
+  cache:
+    paths:
+      - vendor/bundle
+  needs: []

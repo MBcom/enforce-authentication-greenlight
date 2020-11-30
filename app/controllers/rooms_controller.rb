@@ -33,6 +33,7 @@ class RoomsController < ApplicationController
                 unless: -> { !Rails.configuration.enable_email_verification }
   before_action :verify_room_owner_valid, only: [:show, :join]
   before_action :verify_user_not_admin, only: [:show]
+  before_action :verify_isauthenticated, only: [:join, :start, :join_specific_room]
   skip_before_action :verify_authenticity_token, only: [:join]
 
   # POST /
@@ -116,13 +117,17 @@ class RoomsController < ApplicationController
         return redirect_to room_path(room_uid: params[:room_uid]), flash: { alert: I18n.t("room.access_code_required") }
       end
 
-      # Assign join name if passed.
-      if params[@room.invite_path]
+      
+    end
+
+    # Assign join name if passed.
+    if params[@room.invite_path] && current_user && !current_user.nil? && ( @room.owned_by?(current_user) || @shared_room)
         @join_name = params[@room.invite_path][:join_name]
-      elsif !params[:join_name]
+    elsif current_user && !current_user.nil?
+        @join_name = current_user.name
+    elsif !params[:join_name]
         # Join name not passed.
         return redirect_to root_path
-      end
     end
 
     # create or update cookie with join name
@@ -177,8 +182,15 @@ class RoomsController < ApplicationController
     opts[:require_moderator_approval] = room_setting_with_config("requireModeratorApproval")
     opts[:record] = record_meeting
 
+    if params[@room.invite_path]
+        @join_name = params[@room.invite_path][:join_name]
+    elsif !params[:join_name]
+        # Join name not passed.
+        @join_name = current_user.name
+    end
+
     begin
-      redirect_to join_path(@room, current_user.name, opts, current_user.uid)
+      redirect_to join_path(@room, @join_name, opts, current_user.uid)
     rescue BigBlueButton::BigBlueButtonException => e
       logger.error("Support: #{@room.uid} start failed: #{e}")
 
@@ -389,6 +401,10 @@ class RoomsController < ApplicationController
 
   def verify_user_not_admin
     redirect_to admins_path if current_user&.has_role?(:super_admin)
+  end
+
+  def verify_isauthenticated
+    return current_user && !current_user.nil?
   end
 
   def auth_required

@@ -58,7 +58,11 @@ module Joiner
       opts[:require_moderator_approval] = room_setting_with_config("requireModeratorApproval")
       opts[:mute_on_start] = room_setting_with_config("muteOnStart")
 
-      if current_user
+      if params[@room.invite_path] && current_user && !current_user.nil? && ( @room.owned_by?(current_user) || @shared_room)
+        join_name = params[@room.invite_path][:join_name]
+
+        redirect_to join_path(@room, join_name, opts, current_user.uid)
+      elsif current_user
         redirect_to join_path(@room, current_user.name, opts, current_user.uid)
       else
         join_name = params[:join_name] || params[@room.invite_path][:join_name]

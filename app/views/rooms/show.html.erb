@@ -22,6 +22,7 @@
 <div class="background pb-1">
   <div class="container">
     <div class="row pt-7 pt-sm-9">
+      <div class="col-lg-7 col-sm-12">
       <div class="col-lg-9 col-sm-12">
         <div id="room-title" class="display-3 form-inline <%= 'edit_hover_class' if current_user.main_room != @room %>" data-path="<%= update_settings_path(@room) %>">
            <h1 contenteditable=false id="user-text" class="display-3 text-left mb-3 font-weight-400"><%= title(@room.name) %></h1>
@@ -71,13 +72,33 @@
           </div>
         <% end %>
       </div>
-      <div class="col-lg-3 col-sm-12 force-bottom mt-5">
-        <% if @room_running %>
-          <%= button_to t("room.join"), room_path(@room), class: "btn btn-primary btn-block px-7 start-button float-right", "data-disable": "" %>
-        <% else %>
-          <% unless exceeds_limit %>
-            <%= button_to t("room.start"), start_room_path(@room), class: "btn btn-primary btn-block px-7 start-button float-right", "data-disable": "" %>
-          <% end %>
+      <div class="col-lg-5 col-sm-12 force-bottom mt-5">
+        
+        <%= form_for room_path(@room), url: (@room_running ? room_path(@room):start_room_path(@room)), method: :post do |f| %>
+          <div class="input-group">
+            <%= f.hidden_field(:search, :value => params[:search])%>
+            <%= f.hidden_field(:column, :value => params[:column])%>
+            <%= f.hidden_field(:direction, :value => params[:direction])%>
+            <% if current_user && !current_user.nil? && (@room.owned_by?(current_user) || @shared_room) %>
+              <%= f.text_field :join_name,
+                required: true,
+                class: "form-control join-form",
+                placeholder: t("enter_your_name"),
+                value: "#{current_user.name}",
+                autofocus: true
+                %>
+              <span class="input-group-append">
+                <button type="submit" class="btn btn-primary btn-sm px-7 form-control join-form">
+                  <%= (!@room_running) ? t("room.start") : t("room.join") %>
+                </button>
+              </span>
+            <% else %>
+                <% 
+                # Hier sollte man eigentlich garnicht hinkommen, da man angemeldet sein muss wenn man seinen eigenen Raum betrachtet 
+                %>
+                Bitte kontaktieren Sie Ihren Administrator. 0xc50004154545
+            <% end %>
+          </div>
         <% end %>
       </div>
     </div>

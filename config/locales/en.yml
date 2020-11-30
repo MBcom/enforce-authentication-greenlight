@@ -17,6 +17,7 @@
 # Locale.
 
 en:
+  retry: Please try again.
   activerecord:
     attributes:
       user:
@@ -209,7 +210,7 @@ en:
         no_users: No users found
         role: Role
         uid: User ID
-        username: Username
+        username: 5-digit MLU login
         valid: Valid
       title: Manage Users
   add_to_google_calendar: "Add to Google Calendar"
@@ -301,7 +302,7 @@ en:
       signout: Sign out
   home_room: Home Room
   info_update_success: Information successfully updated.
-  invalid_credentials: The email and password you entered did not match our records. Try again or click Forgot Password to reset your password.
+  invalid_credentials: The username or password you entered did not match our records. Try again or reset your password in ITZ serviceportal of MLU.
   invalid_login_method: Login failed due to account mismatch. You need to log in with omniauth.
   invite_message: "To invite someone to the meeting, send them this link:"
   javascript:
@@ -478,6 +479,8 @@ en:
       recaptcha_unreachable: Oops, we failed to validate your reCAPTCHA response. Please try again.
       verification_failed: reCAPTCHA verification failed, please try again.
   recording:
+    notes: Notes
+    download: Download
     all_recordings: All Recordings
     email: Email Recording
     error: There was an error retrieving %{count} recording(s)

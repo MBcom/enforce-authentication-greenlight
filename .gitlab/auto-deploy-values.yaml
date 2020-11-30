@@ -1,0 +1,15 @@
+replicaCount: 1
+ingress:
+  enabled: true
+  tls:
+    enabled: true
+    secretName: "kube-cert"
+service:
+  externalPort: 80
+  internalPort: 80
+livenessProbe:
+  initialDelaySeconds: 50
+readinessProbe:
+  initialDelaySeconds: 40
+
+
