@@ -33,15 +33,10 @@
         </div>
         <h4 class="text-left mb-6"><%= @room.sessions %> <%= t("room.sessions") %><% unless hide_recording_tables %> | <%= @recordings.length %> <%= t("room.recordings") %><% end %></h4>
         <% unless exceeds_limit %>
-          <label class="form-label"><%= t("room.invite_participants") %></label>
+          <label class="form-label"><i class="fas fa-link mr-1"></i><%= t("room.invite_participants") %></label>
           <div class="row">
             <div class="col-lg-7 col-md-12 mt-2">
               <div class="input-group w-100">
-                <div class="input-group-prepend">
-                  <span class="input-icon-addon">
-                    <i class="fas fa-link"></i>
-                  </span>
-                </div>
                 <input id="invite-url" type="text" class="form-control" value="<%= request.base_url + @room.invite_path %>" readonly="">
                 <div class="input-group-append">
                   <button id="copy-invite" class="btn btn-outline-secondary" onclick="copyInvite()" title="<%= t("copy") %>">
@@ -49,7 +44,7 @@
                   </button>
                   <% if @room.access_code.present? %>
                     <input id="copy-code" value="<%= @room.access_code %>" type="hidden">
-                    <button id="copy-access" class="btn btn-outline-danger" onclick="copyAccess()" title="<%= t("room.copy_access") %>">
+                    <button id="copy-access" class="btn btn-outline-warning" onclick="copyAccess()" title="<%= t("room.copy_access") %>">
                       <i class="fas fa-copy"></i>
                       <%= t("room.copy_access") %>
                     </button>
