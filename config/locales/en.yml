@@ -480,7 +480,7 @@ en:
       verification_failed: reCAPTCHA verification failed, please try again.
   recording:
     notes: Notes
-    download: Download
+    download: stream presentation
     all_recordings: All Recordings
     email: Email Recording
     error: There was an error retrieving %{count} recording(s)

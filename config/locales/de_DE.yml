@@ -481,7 +481,7 @@ de_DE:
       verification_failed: "reCAPTCHA Verifikation fehlgeschlagen, bitte nochmals versuchen."
   recording:
     notes: Notizen
-    download: Download
+    download: Stream Präsentation
     all_recordings: Alle Aufzeichnungen
     email: Aufzeichnungslink per E-Mail
     error: "Beim Abruf von %{count} Aufzeichnung(en) ist ein Fehler aufgetreten."
