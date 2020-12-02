@@ -33,6 +33,7 @@ class RoomsController < ApplicationController
                 unless: -> { !Rails.configuration.enable_email_verification }
   before_action :verify_room_owner_valid, only: [:show, :join]
   before_action :verify_user_not_admin, only: [:show]
+  before_action :verify_isauthenticated, only: [:join, :start, :join_specific_room]
   skip_before_action :verify_authenticity_token, only: [:join]
 
   # POST /
@@ -400,6 +401,10 @@ class RoomsController < ApplicationController
 
   def verify_user_not_admin
     redirect_to admins_path if current_user&.has_role?(:super_admin)
+  end
+
+  def verify_isauthenticated
+    return current_user && !current_user.nil?
   end
 
   def auth_required
