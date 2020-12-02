@@ -33,29 +33,25 @@
         </div>
         <h4 class="text-left mb-6"><%= @room.sessions %> <%= t("room.sessions") %><% unless hide_recording_tables %> | <%= @recordings.length %> <%= t("room.recordings") %><% end %></h4>
         <% unless exceeds_limit %>
-          <label class="form-label"><%= t("room.invite_participants") %></label>
+          <label class="form-label"><i class="fas fa-link mr-1"></i><%= t("room.invite_participants") %></label>
           <div class="row">
             <div class="col-lg-7 col-md-12 mt-2">
-              <div class="input-icon invite-link-input">
-                <span class="input-icon-addon">
-                  <i class="fas fa-link"></i>
-                </span>
-                <input id="invite-url" type="text" class="form-control w-100" value="<%= request.base_url + @room.invite_path %>" readonly="">
-              </div>
-            </div>
-            <div class="col-lg-5 col-md-12">
-              <div class="row">
-                <div class="col-sm-6">
-                  <a id="copy" class="btn btn-primary btn-block mt-2">
+              <div class="input-group w-100">
+                <input id="invite-url" type="text" class="form-control" value="<%= request.base_url + @room.invite_path %>" readonly="">
+                <div class="input-group-append">
+                  <button id="copy-invite" class="btn btn-outline-secondary" onclick="copyInvite()" title="<%= t("copy") %>">
                     <i class="fas fa-copy"></i>
-                    <%= t("copy") %>
-                  </a>
-                </div>
-                <div class="col-sm-6 pl-0">
+                  </button>
+                  <% if @room.access_code.present? %>
+                    <input id="copy-code" value="<%= @room.access_code %>" type="hidden">
+                    <button id="copy-access" class="btn btn-outline-warning" onclick="copyAccess()" title="<%= t("room.copy_access") %>">
+                      <i class="fas fa-copy"></i>
+                      <%= t("room.copy_access") %>
+                    </button>
+                  <% end %>
                   <% if Rails.configuration.enable_google_calendar_button %>
-                    <a href="<%= google_calendar_path %>" target="__blank" id="schedule" class="btn btn-primary btn-block mt-2">
+                    <a href="<%= google_calendar_path %>" target="__blank" id="schedule" class="btn btn-outline-primary" title="<%= t("add_to_google_calendar") %>">
                       <i class="fas fa-calendar-plus"></i>
-                      <%= t("add_to_google_calendar") %>
                     </a>
                   <% end %>
                 </div>
