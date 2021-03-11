@@ -59,6 +59,7 @@ $(document).on('turbolinks:load', function(){
     $(".share-room").click(function() {
       // Update the path of save button
       $("#save-access").attr("data-path", $(this).data("path"))
+      $("#room-owner-uid").val($(this).data("owner"))
 
       // Get list of users shared with and display them
       displaySharedUsers($(this).data("users-path"))
@@ -72,11 +73,32 @@ $(document).on('turbolinks:load', function(){
       $(".bs-searchbox").siblings().hide()
     })
 
+    $("#share-room-select ~ button").on("click", function() {
+      $(".bs-searchbox").siblings().hide()
+    })
+
     $(".bs-searchbox input").on("input", function() {
       if ($(".bs-searchbox input").val() == '' || $(".bs-searchbox input").val().length < 3) {
+        $(".select-options").remove()
         $(".bs-searchbox").siblings().hide()
       } else {
-        $(".bs-searchbox").siblings().show()
+        // Manually populate the dropdown
+        $.get($("#share-room-select").data("path"), { search: $(".bs-searchbox input").val(), owner_uid: $("#room-owner-uid").val() }, function(users) {
+          $(".select-options").remove()
+          if (users.length > 0) {
+            users.forEach(function(user) {
+              let opt = document.createElement("option")
+              $(opt).val(user.uid)
+              $(opt).text(user.name)
+              $(opt).addClass("select-options")
+              $(opt).attr("data-subtext", user.uid)
+              $("#share-room-select").append(opt)
+            })
+            // Only refresh the select dropdown if there are results to show
+            $('#share-room-select').selectpicker('refresh');
+          } 
+          $(".bs-searchbox").siblings().show()
+        })     
       }
     })
 
