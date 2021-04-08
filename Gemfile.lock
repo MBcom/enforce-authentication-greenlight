@@ -286,7 +286,7 @@ GEM
       validate_url
       webfinger (>= 1.0.1)
     os (1.1.1)
-    pagy (4.1.0)
+    pagy (3.12.0)
     parallel (1.20.1)
     parser (3.0.1.0)
       ast (~> 2.4.1)
@@ -534,4 +534,4 @@ DEPENDENCIES
   webmock
 
 BUNDLED WITH
-   2.2.15
+   1.17.3
