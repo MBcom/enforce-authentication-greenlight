@@ -74,4 +74,23 @@
       <% end %>
     <% end %>
   <% end %>
+  <% if Rails.configuration.voice_bridge_phone_number %>
+    <div class="row">
+      <div class="col-11 col-lg-3 offset-1">
+        <label class="form-label"><i class="fas fa-phone mr-1 ml-1"></i><%= t("room.invite_participants_tel") %></label>
+      </div>
+      <div class="col-0 col-lg-3 d-lg-flex d-none">
+          <label class="form-label">PIN</label>
+      </div>
+      <div class=" offset-1 col-lg-3 col-md-6 mt-2">
+      <%= Rails.configuration.voice_bridge_phone_number %>
+      </div>
+      <div class="col-11 col-lg-0 offset-1 offset-lg-0 d-lg-none">
+          <label class="form-label">PIN</label>
+      </div>
+      <div class=" offset-1 offset-lg-0 col-lg-3 col-md-6 mt-2">
+          <%= @room.phone_pin %>
+      </div>
+    </div>
+  <% end %>
 <% end %>
