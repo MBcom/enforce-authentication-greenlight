@@ -145,5 +145,4 @@ gem "recaptcha"
 
 gem 'i18n-language-mapping', '~> 0.1.1'
 
-gem 'sha3'
-
+gem 'sha3', '~> 1.0', '>= 1.0.1'

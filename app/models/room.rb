@@ -87,7 +87,7 @@ class Room < ApplicationRecord
   end
 
   def phone_pin
-    (SHA3::Digest.hexdigest(:sha224, uid).to_s(10) % 100000).to_s.rjust(5, "0")
+    (SHA3::Digest.hexdigest(:sha224, "mai-7dg-kwe").unpack("n").first % 100000).to_s.rjust(5, "0")
   end
 
   # Return table with the running rooms first
