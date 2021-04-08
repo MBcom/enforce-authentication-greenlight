@@ -170,16 +170,41 @@ $(document).on('turbolinks:load', function(){
   }
 });
 
+function fallbackCopyTextToClipboard(text) {
+  var textArea = document.createElement("textarea");
+  textArea.value = text;
+  
+  // Avoid scrolling to bottom
+  textArea.style.top = "0";
+  textArea.style.left = "0";
+  textArea.style.position = "fixed";
+
+  document.body.appendChild(textArea);
+  textArea.focus();
+  textArea.select();
+
+  try {
+    var successful = document.execCommand('copy');
+    var msg = successful ? 'successful' : 'unsuccessful';
+    console.log('Fallback: Copying text command was ' + msg);
+    document.body.removeChild(textArea);
+    return true;
+  } catch (err) {
+    console.error('Fallback: Oops, unable to copy', err);
+  }
+
+  document.body.removeChild(textArea);
+  return false;
+}
+
 function copyInvite() {
-  $('#invite-url').select()
-  if (document.execCommand("copy")) {
-    $('#invite-url').blur();
+  if (fallbackCopyTextToClipboard($('#invite-url').text())) {
     copy = $("#copy-invite")
     copy.addClass('btn-success');
-    copy.html("<i class='fas fa-check'></i>" + getLocalizedString("copied"))
+    copy.html("<i class='fas fa-check'></i>&nbsp;" + getLocalizedString("copied"))
     setTimeout(function(){
       copy.removeClass('btn-success');
-      copy.html("<i class='fas fa-copy'></i>")
+      copy.html("<i class='fas fa-copy'></i>&nbsp;"+ getLocalizedString("copy"))
     }, 1000)
   }
 }

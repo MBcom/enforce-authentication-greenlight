@@ -57,6 +57,7 @@ module Joiner
       opts[:record] = record_meeting
       opts[:require_moderator_approval] = room_setting_with_config("requireModeratorApproval")
       opts[:mute_on_start] = room_setting_with_config("muteOnStart")
+      opts[:voice_bridge] = @room.phone_pin
 
       if params[@room.invite_path] && current_user && !current_user.nil? && (current_user.name == "Inf BBB Guest" || @room.owned_by?(current_user) || @shared_room)
         join_name = params[@room.invite_path][:join_name]
