@@ -8,8 +8,8 @@ service:
   externalPort: 80
   internalPort: 80
 livenessProbe:
-  initialDelaySeconds: 50
+  initialDelaySeconds: 100
 readinessProbe:
-  initialDelaySeconds: 40
+  initialDelaySeconds: 80
 
 
