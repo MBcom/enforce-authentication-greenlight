@@ -45,28 +45,28 @@
           </div>
         </div>
         <div id="invite-url" class="row">
-            <div class="col-11 offset-1 col-lg-5">
+            <div class="col-11 offset-1">
               <div class="row">
-                <div class="col-12 col-lg-6">
-                  <label class="form-label"><i class="fas fa-globe mr-1 ml-1"></i><%= t("room.invite_participants_web") %></label><br />
+                <div class="col-12 <%= 'col-lg-6' if @room.access_code.present? %>">
+                  <label class="form-label"><i class="fas fa-globe mr-1 ml-1"></i><%= t("room.invite_participants_web") %></label>
                   <%= request.base_url + @room.invite_path %>
                 </div>
                 <div class="col-12 col-lg-6">
                   <% if @room.access_code.present? %>
-                      <label class="form-label">PIN</label><br />
+                      <label class="form-label">PIN</label>
                       <%= @room.access_code %>
                   <% end %>
                 </div>
               </div>
         
               <% if Rails.configuration.voice_bridge_phone_number %>
-                  <div class="row">
+                  <div class="row mt-2">
                       <div class="col-12 col-lg-6">
-                        <label class="form-label"><i class="fas fa-phone mr-1 ml-1"></i><%= t("room.invite_participants_tel") %></label><br />
+                        <label class="form-label"><i class="fas fa-phone mr-1 ml-1"></i><%= t("room.invite_participants_tel") %></label>
                         <%= Rails.configuration.voice_bridge_phone_number %>
                       </div>
                       <div class="col-12 col-lg-6">
-                          <label class="form-label">PIN</label><br />
+                          <label class="form-label">PIN</label>
                           <%= @room.phone_pin %>
                       </div>
                   </div>
