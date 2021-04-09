@@ -32,66 +32,53 @@
           <% end %>
         </div>
         <h4 class="text-left mb-6"><%= @room.sessions %> <%= t("room.sessions") %><% unless hide_recording_tables %> | <%= @recordings.length %> <%= t("room.recordings") %><% end %></h4>
-        <area id="invite-url">
-        <% unless exceeds_limit %>
-          <div class="row">
-            <div class="col-lg-4 col-md-6">
-              <label class="form-label"><i class="fas fa-link mr-1"></i><%= t("room.invite_participants") %></label>
-            </div>
-            <div class="col-lg-3 col-md-6">
-              <button id="copy-invite" class="btn btn-outline-secondary float-right" onclick="copyInvite()" title="<%= t("copy") %>">
-                        <i class="fas fa-copy"></i>&nbsp;<%= t("copy") %>
-              </button>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-11 col-lg-3 offset-1">
-              <label class="form-label"><i class="fas fa-globe mr-1 ml-1"></i><%= t("room.invite_participants_web") %></label>
-            </div>
-            <% if @room.access_code.present? %>
-              <div class="col-0 col-lg-3 d-lg-flex d-none">
-                <label class="form-label">PIN</label>
-              </div>
-            <% end %>
-            <div class=" offset-1 col-lg-3 col-md-6 mt-2">
-              <%= request.base_url + @room.invite_path %>
-            </div>
-            <% if @room.access_code.present? %>
-              <div class="col-11 col-lg-0 offset-1 offset-lg-0 d-lg-none">
-                <label class="form-label">PIN</label>
-              </div>
-            <% end %>
-            <% if @room.access_code.present? %>
-              <div class=" offset-1 offset-lg-0 col-lg-3 col-md-6 mt-2">
-                <%= @room.access_code %>
-              </div>
-            <% end %>
-          </div>
-        <% end %>
-        <% if Rails.configuration.voice_bridge_phone_number %>
-            <div class="row">
-                <div class="col-11 col-lg-3 offset-1">
-                  <label class="form-label"><i class="fas fa-phone mr-1 ml-1"></i><%= t("room.invite_participants_tel") %></label>
-                </div>
-                <div class="col-0 col-lg-3 d-lg-flex d-none">
-                    <label class="form-label">PIN</label>
-                </div>
-                <div class=" offset-1 col-lg-3 col-md-6 mt-2">
-                <%= Rails.configuration.voice_bridge_phone_number %>
-                </div>
-                <div class="col-11 col-lg-0 offset-1 offset-lg-0 d-lg-none">
-                    <label class="form-label">PIN</label>
-                </div>
-                <div class=" offset-1 offset-lg-0 col-lg-3 col-md-6 mt-2">
-                    <%= @room.phone_pin %>
-                </div>
-              </div>
-        <% end %>
-        </area>
-      </div>
-      <div class="col-lg-5 col-sm-12 force-bottom mt-5">
         
-        <%= form_for room_path(@room), url: (@room_running ? room_path(@room):start_room_path(@room)), method: :post do |f| %>
+        <% unless exceeds_limit %>
+        <div class="row">
+          <div class="col-lg-4 col-md-6">
+            <label class="form-label"><i class="fas fa-link mr-1"></i><%= t("room.invite_participants") %></label>
+          </div>
+          <div class="col-lg-3 col-md-6">
+            <button id="copy-invite" class="btn btn-outline-secondary float-right" onclick="copyInvite()" title="<%= t("copy") %>">
+                      <i class="fas fa-copy"></i>&nbsp;<%= t("copy") %>
+            </button>
+          </div>
+        </div>
+        <div id="invite-url" class="row">
+            <div class="col-11 offset-1 col-lg-5">
+              <div class="row">
+                <div class="col-12 col-lg-6">
+                  <label class="form-label"><i class="fas fa-globe mr-1 ml-1"></i><%= t("room.invite_participants_web") %></label><br />
+                  <%= request.base_url + @room.invite_path %>
+                </div>
+                <div class="col-12 col-lg-6">
+                  <% if @room.access_code.present? %>
+                      <label class="form-label">PIN</label><br />
+                      <%= @room.access_code %>
+                  <% end %>
+                </div>
+              </div>
+        
+              <% if Rails.configuration.voice_bridge_phone_number %>
+                  <div class="row">
+                      <div class="col-12 col-lg-6">
+                        <label class="form-label"><i class="fas fa-phone mr-1 ml-1"></i><%= t("room.invite_participants_tel") %></label><br />
+                        <%= Rails.configuration.voice_bridge_phone_number %>
+                      </div>
+                      <div class="col-12 col-lg-6">
+                          <label class="form-label">PIN</label><br />
+                          <%= @room.phone_pin %>
+                      </div>
+                  </div>
+              <% end %>
+            </div>
+        </div>
+        <% end %>
+        
+      </div>
+      <div class="col-lg-5 col-sm-12 d-flex align-items-center mt-5">
+        
+        <%= form_for room_path(@room), url: (@room_running ? room_path(@room):start_room_path(@room)), method: :post, html: {class: 'w-100' } do |f| %>
           <div class="input-group">
             <%= f.hidden_field(:search, :value => params[:search])%>
             <%= f.hidden_field(:column, :value => params[:column])%>
