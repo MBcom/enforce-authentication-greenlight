@@ -48,6 +48,13 @@ gem 'turbolinks', '~> 5.2.1'
 gem 'tzinfo-data', '~> 1.2021.1'
 gem 'uglifier', '~> 4.2.0'
 
+gem 'pluck_to_hash', '~> 1.0.2'
+
+gem 'local_time', '~> 2.1.0'
+
+# Use a sqlite database in test and development.
+gem 'sqlite3', '~> 1.3.6'
+
 group :production do
   gem 'hiredis', '~> 0.6.3'
   gem "lograge", '~> 0.11.2'
