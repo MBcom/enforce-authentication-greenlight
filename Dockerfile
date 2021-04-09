@@ -61,5 +61,7 @@ EXPOSE 80
 ARG version_code
 ENV VERSION_CODE=$version_code
 
+RUN bundle exec rake assets:precompile
+
 # Start the application.
 CMD ["bin/start"]
