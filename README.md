@@ -26,6 +26,7 @@ Greenlight is a simple front-end interface for your BigBlueButton server. At its
 1. set the `VOICE_BRIDGE_PHONE_NUMBER` environment variable to your SIP telephone number. This value will be displayed in each room.
 2. setup the BBB SIP Integration, if you use Scalelite, you can follow the instructions from https://github.com/MBcom/bbb-clustersip.git to setup a central SIP gateway for your BBB cluster
 3. Greenlight will generate automatically a static conference PIN for each room and shows it next to the telephone number
+![image](https://user-images.githubusercontent.com/27956078/114266534-1bf5d680-99f7-11eb-8fcb-d28435317c8a.png)
 
 ## Deployment
 This project is designed to be deployed to Kubernetes Clusters via GitLab CI/CD. If you have not htis ability you can use the scripts provided at https://github.com/MBcom/kubernetes-greenlight to deploy Greenlight to a Kubernetes Cluster. 
