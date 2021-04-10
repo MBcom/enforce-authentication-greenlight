@@ -61,7 +61,5 @@ EXPOSE 80
 ARG version_code
 ENV VERSION_CODE=$version_code
 
-RUN SECRET_KEY_BASE=`bin/rake secret` bundle exec rake assets:precompile
-
 # Start the application.
 CMD ["bin/start"]
