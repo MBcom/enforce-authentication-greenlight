@@ -1,19 +1,18 @@
 # Greenlight with enforced authentication and preparation for MP4 recording view
 
 
-![Travis CI](https://travis-ci.org/bigbluebutton/greenlight.svg?branch=master)
 ![Coverage
 !Status](https://coveralls.io/repos/github/bigbluebutton/greenlight/badge.svg?branch=master)
 ![Docker Pulls](https://img.shields.io/docker/pulls/bigbluebutton/greenlight.svg)
 
-Greenlight is a simple front-end interface for your BigBlueButton server. At it's heart, Greenlight provides a minimalistic web-based application that allows users to:
+Greenlight is a simple front-end interface for your BigBlueButton server. At its heart, Greenlight provides a minimalistic web-based application that allows users to:
 
   * Signup/Login with LDAP/AD Authentication.
   * Create and manage your own personal rooms ([BigBlueButton](https://github.com/bigbluebutton/bigbluebutton) sessions).
   * Invite others to your room using a simple URL.
   * View recordings and share them with others.
 
-**This greenlight has the same features as `release-2.7.9` of upstream Greenlight. Feel free to contribute.**
+**This greenlight has the same features as `release-2.8.2.2` of upstream Greenlight. Feel free to contribute.**
 
 ## extra Features additional to upstream Greenlight
   * enforce user authentication to view rooms or join meetings
@@ -21,6 +20,12 @@ Greenlight is a simple front-end interface for your BigBlueButton server. At it'
   * all others are enforced to user their domain names as in Greenlight
   * button for MP4 video, e.g. created with https://github.com/MBcom/kubernetes-bbb-video-download
   * button for getting shared notes, e.g. copied with https://github.com/MBcom/kubernetes-bbb-video-download/blob/master/snippets/post_publish_copy_notes.rb and copy_notes.sh
+  * SIP support - with static PIN for each room
+
+## enable SIP support
+1. set the `VOICE_BRIDGE_PHONE_NUMBER` environment variable to your SIP telephone number. This value will be displayed in each room.
+2. setup the BBB SIP Integration, if you use Scalelite, you can follow the instructions from https://github.com/MBcom/bbb-clustersip.git to setup a central SIP gateway for your BBB cluster
+3. Greenlight will generate automatically a static conference PIN for each room and shows it next to the telephone number
 
 ## Deployment
 This project is designed to be deployed to Kubernetes Clusters via GitLab CI/CD. If you have not htis ability you can use the scripts provided at https://github.com/MBcom/kubernetes-greenlight to deploy Greenlight to a Kubernetes Cluster. 
