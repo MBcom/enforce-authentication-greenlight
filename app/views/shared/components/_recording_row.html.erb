@@ -32,10 +32,12 @@
   </td>
   <% if recording_thumbnails? %>
     <td class="overflow-hidden">
-      <% p = recording[:playbacks].find do |p| p.key?(:preview) end %>
-      <% if p %>
-        <% safe_recording_images(p[:preview][:images][:image]).each do |img| %>
-          <img src="<%= img[:content].strip.gsub(/https:\/\/.*?\//, '/') %>" class="thumbnail px-2" alt="Thumbnail" />
+      <% if recording[:published] %>
+        <% p = recording[:playbacks].find do |p| p.key?(:preview) end %>
+        <% if p %>
+          <% safe_recording_images(p[:preview][:images][:image]).each do |img| %>
+            <img src="<%= img[:content].strip.gsub(/https:\/\/.*?\//, '/') %>" class="thumbnail px-2" alt="Thumbnail" />
+          <% end %>
         <% end %>
       <% end %>
     </td>
@@ -50,6 +52,8 @@
     <div class="dropdown">
       <% if recording[:metadata][:"gl-listed"] == "true" %>
         <button class="btn btn-sm btn-secondary dropdown-toggle" data-toggle="dropdown"><i class="dropdown-icon fas fa-globe px-2"></i> <%= t("recording.visibility.public") %></button>
+      <% elsif !recording[:published] %>
+        <button class="btn btn-sm btn-secondary dropdown-toggle" data-toggle="dropdown"><i class="dropdown-icon fas fa-lock px-2"></i> <%= t("recording.visibility.inaccessible") %></button>
       <% else %>
         <button class="btn btn-sm btn-secondary dropdown-toggle" data-toggle="dropdown"><i class="dropdown-icon fas fa-link px-2"></i> <%= t("recording.visibility.unlisted") %></button>
       <% end %>
@@ -60,10 +64,14 @@
         <%= button_to update_recording_path(meetingID: recording[:meetingID], record_id: recording[:recordID], state: "unlisted"), class: "dropdown-item", "data-disable": "" do %>
           <i class="dropdown-icon fas fa-link"></i> <%= t("recording.visibility.unlisted") %>
         <% end %>
+        <%= button_to update_recording_path(meetingID: recording[:meetingID], record_id: recording[:recordID], state: "inaccessible"), class: "dropdown-item", "data-disable": "" do %>
+          <i class="dropdown-icon fas fa-lock"></i> <%= t("recording.visibility.inaccessible") %>
+        <% end %>
       </div>
     </div>
   </td>
   <td>
+   <% if recording[:published] %>
     <% sorted_formats = recording[:playbacks].sort_by! { |p| p[:type] } %>
     <% sorted_formats.each do |p| %>
       <%= link_to t("recording.format.#{p[:type]}"), p[:url].gsub(/https:\/\/.*?\//, '/'), class: "btn btn-sm btn-primary", target: "_blank" %>
@@ -74,6 +82,7 @@
     <% if bbb_notes_available?(recording[:recordID]) %>
     	<a class="btn btn-sm btn-primary ml-2" target="_blank" href="/download/presentation/<%= recording[:recordID] %>/notes.pdf"><%= t("recording.notes") %></a>
     <% end %>
+   <% end %>
   </td>
   <td class="text-center">
     <div class="item-action dropdown">
