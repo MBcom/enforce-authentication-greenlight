@@ -10,7 +10,7 @@ ENV BUNDLE_APP_CONFIG="$RAILS_ROOT/.bundle"
 RUN mkdir -p $RAILS_ROOT
 WORKDIR $RAILS_ROOT
 
-ARG BUILD_PACKAGES="build-base curl-dev git shared-mime-info"
+ARG BUILD_PACKAGES="build-base curl-dev git"
 ARG DEV_PACKAGES="postgresql-dev sqlite-libs sqlite-dev yaml-dev zlib-dev nodejs yarn"
 ARG RUBY_PACKAGES="tzdata"
 
@@ -23,7 +23,9 @@ COPY Gemfile* ./
 COPY Gemfile Gemfile.lock $RAILS_ROOT/
 
 RUN bundle config --global frozen 1 \
-    && bundle install --deployment --without development:test:assets -j4 --path=vendor/bundle \
+    && bundle config set deployment 'true' \
+    && bundle config set without 'development:test:assets' \
+    && bundle install -j4 --path=vendor/bundle \
     && rm -rf vendor/bundle/ruby/2.7.0/cache/*.gem \
     && find vendor/bundle/ruby/2.7.0/gems/ -name "*.c" -delete \
     && find vendor/bundle/ruby/2.7.0/gems/ -name "*.o" -delete
@@ -40,7 +42,7 @@ FROM ruby:2.7.2-alpine
 
 # Set a variable for the install location.
 ARG RAILS_ROOT=/usr/src/app
-ARG PACKAGES="tzdata curl postgresql-client sqlite-libs yarn nodejs bash shared-mime-info"
+ARG PACKAGES="tzdata curl postgresql-client sqlite-libs yarn nodejs bash"
 
 ENV RAILS_ENV=production
 ENV BUNDLE_APP_CONFIG="$RAILS_ROOT/.bundle"
@@ -61,6 +63,8 @@ EXPOSE 80
 ARG version_code
 ENV VERSION_CODE=$version_code
 
+# Set executable permission to start file
+RUN chmod +x bin/start
 
 # Start the application.
 CMD ["bin/start"]
