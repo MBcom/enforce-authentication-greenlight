@@ -33,7 +33,7 @@ variables:
 
   DOCKER_TLS_CERTDIR: ""  # https://gitlab.com/gitlab-org/gitlab-runner/issues/4501
 
-  AUTO_DEPLOY_IMAGE_VERSION: v2.6.0
+  AUTO_DEPLOY_IMAGE_VERSION: v1.0.7
 
 stages:
   - build
