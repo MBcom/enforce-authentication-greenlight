@@ -1,5 +1,5 @@
 env:
-  RUBY_VERSION: 2.7.2
+  RUBY_VERSION: 2.7
   DB_ADAPTER: postgresql
   DB_HOST: localhost
   DB_NAME: postgres
@@ -10,7 +10,10 @@ env:
 name: CI
 on:
   push:
-    branches-ignore: "master"
+    branches-ignore:
+      - master
+      - v1
+      - v2
   pull_request:
     branches: "*"
 
@@ -58,8 +61,9 @@ jobs:
         run:  |
           bundler exec rails db:create RAILS_ENV=test
           bundler exec rails db:migrate RAILS_ENV=test
+
       - name: Run Rubocop
-        run: bundle exec rubocop --parallel --fail-level F
+        run: bundle exec rubocop --parallel
 
       - name: Run RSpec
         run: bundle exec rspec
